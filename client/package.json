@@ -1,0 +1,35 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@react-navigation/native": "^7.1.14",
+    "@react-navigation/stack": "^7.4.2",
+    "axios": "^1.10.0",
+    "expo": "^53.0.16",
+    "expo-app-loading": "^2.1.1",
+    "expo-font": "~13.3.2",
+    "expo-location": "^18.1.6",
+    "expo-status-bar": "~2.2.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-native": "^0.80.1",
+    "react-native-safe-area-context": "^5.5.1",
+    "react-native-screens": "^4.11.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0"
+  }
+}
