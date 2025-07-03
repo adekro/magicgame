@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // o "postgresql" se usi Supabase/PostgreSQL
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  password  String    // Verrà gestito con hashing in un secondo momento
+  level     Int       @default(1)
+  mana      Int       @default(100)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  spells    SpellBook[] // Relazione molti-a-molti con Spell attraverso SpellBook
+  schoolId  String?
+  school    School?   @relation(fields: [schoolId], references: [id])
+
+  @@map("users")
+}
+
+model Spell {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  manaCost    Int
+  damage      Int       @default(0) // Danno base, può essere 0 per incantesimi non offensivi
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  users       SpellBook[] // Relazione molti-a-molti con User attraverso SpellBook
+  schoolId    String? // Incantesimi possono appartenere a una scuola
+  school      School?   @relation(fields: [schoolId], references: [id])
+
+  @@map("spells")
+}
+
+// Tabella di join per la relazione molti-a-molti tra User e Spell
+model SpellBook {
+  userId    String
+  spellId   String
+  user      User     @relation(fields: [userId], references: [id])
+  spell     Spell    @relation(fields: [spellId], references: [id])
+  assignedAt DateTime @default(now())
+
+  @@id([userId, spellId])
+  @@map("spell_books")
+}
+
+model School {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  element     String?  // Es: Fuoco, Acqua, Aria, Terra
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  students    User[]   // Utenti che appartengono a questa scuola
+  spells      Spell[]  // Incantesimi insegnati da questa scuola
+
+  @@map("schools")
+}
+
+// TODO: Aggiungere futuri modelli come Potion, MagicPoint, etc.
