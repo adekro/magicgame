@@ -1,5 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../prisma/client');
 
 // Creare una nuova magia (potrebbe essere una rotta per admin/dev)
 exports.createSpell = async (req, res) => {
