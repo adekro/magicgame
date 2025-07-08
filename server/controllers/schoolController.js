@@ -1,5 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../prisma/client');
 
 // Creare una nuova scuola (potrebbe essere una rotta per admin/dev)
 exports.createSchool = async (req, res) => {
